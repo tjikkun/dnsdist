@@ -1,9 +1,13 @@
 %global _hardened_build 1
 %global prever alpha2
+%ifnarch %{power64} || 0%{?fedora} || 0%{?rhel} > 7
+%global uglify 1
+%endif
+
 
 Name: dnsdist
 Version: 1.0.0
-Release: 0.5.%{?prever}%{?dist}
+Release: 0.6.%{?prever}%{?dist}
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 Group: System Environment/Daemons
 License: GPLv2
@@ -19,7 +23,9 @@ BuildRequires: luajit-devel
 %endif
 BuildRequires: readline-devel
 BuildRequires: systemd-units
+%if 0%{?uglify}
 BuildRequires: uglify-js
+%endif
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
@@ -42,10 +48,17 @@ legitimate users while shunting or blocking abusive traffic.
 	--enable-dnscrypt \
 	--enable-libsodium \
 	--with-lua \
+%ifnarch %{power64}
 	--with-luajit \
+%endif
 	--enable-unit-tests
 rm html/js/*
+%if 0%{?uglify}
 make min_js
+%else
+cp src_js/* html/js
+%endif
+
 make %{?_smp_mflags}
 mv dnsdistconf.lua dnsdist.conf.sample
 
@@ -80,6 +93,9 @@ rm %{buildroot}%{_bindir}/testrunner
 
 
 %changelog
+* Mon Feb 08 2016 Sander Hoentjen <sander@hoentjen.eu> - 1.0.0-0.6.alpha2
+- PPC on EPEL does not have uglify-js
+
 * Mon Feb 08 2016 Sander Hoentjen <sander@hoentjen.eu> - 1.0.0-0.5.alpha2
 - Don't build against luijit on ppc, it is not available there
 
