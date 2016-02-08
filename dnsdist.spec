@@ -7,7 +7,7 @@
 
 Name: dnsdist
 Version: 1.0.0
-Release: 0.6.%{?prever}%{?dist}
+Release: 0.7.%{?prever}%{?dist}
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 Group: System Environment/Daemons
 License: GPLv2
@@ -56,7 +56,7 @@ rm html/js/*
 %if 0%{?uglify}
 make min_js
 %else
-cp src_js/* html/js
+cp src_js/*.js html/js
 %endif
 
 make %{?_smp_mflags}
@@ -93,6 +93,9 @@ rm %{buildroot}%{_bindir}/testrunner
 
 
 %changelog
+* Mon Feb 08 2016 Sander Hoentjen <sander@hoentjen.eu> - 1.0.0-0.7.alpha2
+- Only copy .js files when minify-js is not available
+
 * Mon Feb 08 2016 Sander Hoentjen <sander@hoentjen.eu> - 1.0.0-0.6.alpha2
 - PPC on EPEL does not have uglify-js
 
