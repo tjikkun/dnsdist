@@ -3,7 +3,7 @@
 
 Name: dnsdist
 Version: 1.0.0
-Release: 0.4.%{?prever}%{?dist}
+Release: 0.5.%{?prever}%{?dist}
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 Group: System Environment/Daemons
 License: GPLv2
@@ -14,7 +14,9 @@ BuildRequires: boost-devel
 BuildRequires: libedit-devel
 BuildRequires: libsodium-devel
 BuildRequires: lua-devel
+%ifnarch %{power64}
 BuildRequires: luajit-devel
+%endif
 BuildRequires: readline-devel
 BuildRequires: systemd-units
 BuildRequires: uglify-js
@@ -78,6 +80,9 @@ rm %{buildroot}%{_bindir}/testrunner
 
 
 %changelog
+* Mon Feb 08 2016 Sander Hoentjen <sander@hoentjen.eu> - 1.0.0-0.5.alpha2
+- Don't build against luijit on ppc, it is not available there
+
 * Mon Feb 08 2016 Sander Hoentjen <sander@hoentjen.eu> - 1.0.0-0.4.alpha2
 - Add sample config file
 
