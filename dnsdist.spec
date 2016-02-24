@@ -1,13 +1,13 @@
 %global _hardened_build 1
 %global prever alpha2
-%ifnarch %{power64} || 0%{?fedora} || 0%{?rhel} > 7
+%ifarch %{nodejs_arches}
 %global uglify 1
 %endif
 
 
 Name: dnsdist
 Version: 1.0.0
-Release: 0.7.%{?prever}%{?dist}
+Release: 0.8.%{?prever}%{?dist}
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 Group: System Environment/Daemons
 License: GPLv2
@@ -18,7 +18,7 @@ BuildRequires: boost-devel
 BuildRequires: libedit-devel
 BuildRequires: libsodium-devel
 BuildRequires: lua-devel
-%ifnarch %{power64}
+%ifnarch %{power64} aarch64 s390 s390x
 BuildRequires: luajit-devel
 %endif
 BuildRequires: readline-devel
@@ -48,7 +48,7 @@ legitimate users while shunting or blocking abusive traffic.
 	--enable-dnscrypt \
 	--enable-libsodium \
 	--with-lua \
-%ifnarch %{power64}
+%ifnarch %{power64} aarch64 s390 s390x
 	--with-luajit \
 %endif
 	--enable-unit-tests
@@ -66,8 +66,8 @@ mv dnsdistconf.lua dnsdist.conf.sample
 make install DESTDIR=%{buildroot}
 
 # install systemd unit file
-%{__install} -D -p -m 644 contrib/%{name}.service %{buildroot}%{_unitdir}/%{name}.service
-%{__install} -d %{buildroot}%{_sysconfdir}/%{name}/
+install -D -p -m 644 contrib/%{name}.service %{buildroot}%{_unitdir}/%{name}.service
+install -d %{buildroot}%{_sysconfdir}/%{name}/
 
 %check
 make %{?_smp_mflags} check
@@ -93,6 +93,10 @@ rm %{buildroot}%{_bindir}/testrunner
 
 
 %changelog
+* Tue Feb 23 2016 Peter Robinson <pbrobinson@fedoraproject.org> 1.0.0-0.8.alpha2
+- Add aarch64/s390(x) to luajit excludes
+- uglify-js available on nodejs arches so use that define
+
 * Mon Feb 08 2016 Sander Hoentjen <sander@hoentjen.eu> - 1.0.0-0.7.alpha2
 - Only copy .js files when minify-js is not available
 
