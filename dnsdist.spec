@@ -7,7 +7,7 @@
 
 Name: dnsdist
 Version: 1.0.0
-Release: 0.8.%{?prever}%{?dist}
+Release: 0.9.%{?prever}%{?dist}
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 Group: System Environment/Daemons
 License: GPLv2
@@ -93,6 +93,9 @@ rm %{buildroot}%{_bindir}/testrunner
 
 
 %changelog
+* Tue Mar 08 2016 Ruben Kerkhof <ruben@rubenkerkhof.com> 1.0.0-0.9.alpha2
+- Rebuild for libsodium soname bump
+
 * Tue Feb 23 2016 Peter Robinson <pbrobinson@fedoraproject.org> 1.0.0-0.8.alpha2
 - Add aarch64/s390(x) to luajit excludes
 - uglify-js available on nodejs arches so use that define
