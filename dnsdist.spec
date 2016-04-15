@@ -106,7 +106,7 @@ exit 0
 
 
 %changelog
-* Fri Apr 15 2016 Ruben Kerkhof <ruben@rubenkerkhof.com> - 1.9.9-0.10.beta1
+* Fri Apr 15 2016 Ruben Kerkhof <ruben@rubenkerkhof.com> - 1.0.0-0.10.beta1
 - Upstream released new version
 - Run as dnsdist user / group (#1326623)
 - Enable support for libre2 and protobufs
