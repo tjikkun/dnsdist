@@ -7,7 +7,7 @@
 
 Name: dnsdist
 Version: 1.0.0
-Release: 0.10.%{?prever}%{?dist}
+Release: 0.11.%{?prever}%{?dist}
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 Group: System Environment/Daemons
 License: GPLv2
@@ -76,7 +76,7 @@ mv dnsdistconf.lua dnsdist.conf.sample
 make install DESTDIR=%{buildroot}
 
 # install systemd unit file
-install -D -p -m 644 contrib/%{name}.service %{buildroot}%{_unitdir}/%{name}.service
+install -D -p -m 644 %{name}.service %{buildroot}%{_unitdir}/%{name}.service
 install -d %{buildroot}%{_sysconfdir}/%{name}/
 
 %pre
@@ -106,6 +106,9 @@ exit 0
 
 
 %changelog
+* Fri Apr 15 2016 Ruben Kerkhof <ruben@rubenkerkhof.com> - 1.0.0-0.10.beta1
+- Use the correct systemd service file
+
 * Fri Apr 15 2016 Ruben Kerkhof <ruben@rubenkerkhof.com> - 1.0.0-0.10.beta1
 - Upstream released new version
 - Run as dnsdist user / group (#1326623)
