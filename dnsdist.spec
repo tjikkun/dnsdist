@@ -1,5 +1,4 @@
 %global _hardened_build 1
-%global prever beta1
 %ifarch %{nodejs_arches}
 %global uglify 1
 %endif
@@ -7,12 +6,12 @@
 
 Name: dnsdist
 Version: 1.0.0
-Release: 0.11.%{?prever}%{?dist}
+Release: 1%{?dist}
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 Group: System Environment/Daemons
 License: GPLv2
 URL: http://dnsdist.org
-Source0: http://downloads.powerdns.com/releases/%{name}-%{version}-%{?prever}.tar.bz2
+Source0: http://downloads.powerdns.com/releases/%{name}-%{version}.tar.bz2
 
 BuildRequires: boost-devel
 BuildRequires: libedit-devel
@@ -43,7 +42,7 @@ legitimate users while shunting or blocking abusive traffic.
 
 
 %prep
-%setup -q -n %{name}-%{version}-%{?prever}
+%setup -q -n %{name}-%{version}
 
 # run as dnsdist user
 sed -i '/^ExecStart/ s/dnsdist/dnsdist -u dnsdist -g dnsdist/' dnsdist.service.in
@@ -106,6 +105,9 @@ exit 0
 
 
 %changelog
+* Thu Apr 21 2016 Sander Hoentjen <sander@hoentjen.eu> - 1.0.0-1
+- Upstream released new version
+
 * Fri Apr 15 2016 Ruben Kerkhof <ruben@rubenkerkhof.com> - 1.0.0-0.10.beta1
 - Use the correct systemd service file
 
